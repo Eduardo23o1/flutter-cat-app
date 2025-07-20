@@ -32,10 +32,10 @@ class VotingScreen extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
 
-          if (breed == null || imageUrl == null) {
+          if (breed == null) {
             return const Center(
               child: Text(
-                'No hay razas disponibles en este momento.',
+                'No se pudo cargar la raza actual.',
                 style: TextStyle(fontSize: 16),
               ),
             );
@@ -50,7 +50,17 @@ class VotingScreen extends StatelessWidget {
                   key: ValueKey(breed.id),
                   direction: DismissDirection.endToStart,
                   onDismissed: (_) => prov.vote(true),
-                  background: Container(color: Colors.green),
+                  background: const SizedBox(),
+                  secondaryBackground: Container(
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.only(right: 24),
+                    color: Colors.green,
+                    /*child: const Icon(
+                      Icons.thumb_up,
+                      color: Colors.white,
+                      size: 32,
+                    ),*/
+                  ),
                   child: Card(
                     elevation: 6,
                     shape: RoundedRectangleBorder(
@@ -64,7 +74,7 @@ class VotingScreen extends StatelessWidget {
                             top: Radius.circular(20),
                           ),
                           child: CachedNetworkImage(
-                            imageUrl: imageUrl,
+                            imageUrl: imageUrl ?? '',
                             height: 250,
                             width: double.infinity,
                             fit: BoxFit.cover,
@@ -72,6 +82,8 @@ class VotingScreen extends StatelessWidget {
                                 (_, __) => const Center(
                                   child: CircularProgressIndicator(),
                                 ),
+                            errorWidget:
+                                (_, __, ___) => const Icon(Icons.error),
                           ),
                         ),
                         Padding(
@@ -82,6 +94,7 @@ class VotingScreen extends StatelessWidget {
                                 breed.name,
                                 style:
                                     Theme.of(context).textTheme.headlineSmall,
+                                textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 16),
                               Row(
@@ -102,7 +115,8 @@ class VotingScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 12),
                               const Text(
-                                'Desliza a la izquierda para ver otra raza',
+                                'Desliza a la izquierda para ver otra raza 😺',
+                                textAlign: TextAlign.center,
                               ),
                             ],
                           ),

@@ -27,8 +27,15 @@ class CatApiService {
     final res = await http.get(Uri.parse(url), headers: _headers);
     if (res.statusCode == 200) {
       final data = jsonDecode(res.body) as List;
+
+      if (data.isEmpty) {
+        print('La API no devolvió imágenes para la raza: $breedId');
+      }
+
       return data.map((e) => CatImage.fromJson(e)).toList();
     }
+
+    print('Error al obtener imágenes. Status code: ${res.statusCode}');
     throw Exception('Error al obtener imágenes');
   }
 }
