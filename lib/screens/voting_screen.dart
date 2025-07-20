@@ -48,7 +48,7 @@ class VotingScreen extends StatelessWidget {
                 constraints: const BoxConstraints(maxWidth: 500),
                 child: Dismissible(
                   key: ValueKey(breed.id),
-                  direction: DismissDirection.startToEnd,
+                  direction: DismissDirection.endToStart,
                   onDismissed: (_) => prov.vote(true),
                   background: Container(color: Colors.green),
                   child: Card(
